@@ -29,10 +29,10 @@ foreach ($pasta in $listaDePastas) {
                 $dataModificacao = $arquivo.LastWriteTime
 
                 if ($dataModificacao -gt $dataHoraComparacao) {
-					$fstring = "{0}            ->     {1}" -f $arquivo.Name, "Modificado"
+					$fstring = "{0}   ->     {1}" -f $arquivo.Name, "Modificado"
                     Write-Host -ForegroundColor Red $fstring 
                 } else {
-					$fstring = "{0}            ->     {1}" -f $arquivo.Name, "Inalterado"
+					$fstring = "{0}   ->     {1}" -f $arquivo.Name, "Inalterado"
                     Write-Host -ForegroundColor Green $fstring 
                 }
             }
