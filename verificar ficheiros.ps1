@@ -1,14 +1,10 @@
-
-# $env:USERNAME é a variavel para o utilizador logado
-
 # Lista de pastas a serem verificadas
-$listaDePastas = @("", "")
-
+$listaDePastas = @("C:\Users\$env:USERNAME\meus docs\ficheiros html\listas", "C:\Users\$env:USERNAME\meus docs\ficheiros html", "C:\Users\$env:USERNAME\meus docs\meus scripts agendados")
 
 
 # ficheiros independentes:
-$file1_path = ""
-$file1_hash = ""
+$file1_path = "C:\Users\$env:USERNAME\meus docs\varios dbs\varios\varios volume.txt"
+$file1_hash = "2162e71bc74905aba208c8a5d26dec6df13faf21428df9f1485f4c06e67d0c6a"
 
 # Data e hora para comparação (por exemplo, 23 de dezembro de 2023 às 10:00)
 $dataHoraComparacao = Get-Date "2023-12-23T10:00:00"
@@ -23,21 +19,26 @@ foreach ($pasta in $listaDePastas) {
         $arquivos = Get-ChildItem -Path $pasta
 
         Write-Host -ForegroundColor Yellow "Arquivos na pasta" $pasta":"
-		
+		#Write-Host "Nome:                                Estado:"
 
         foreach ($arquivo in $arquivos) {
             # Verifica se é um arquivo
             if ($arquivo.PSIsContainer -eq $false) {
-                $caminhoArquivo = $arquivo.FullName
+               #$caminhoArquivo = $arquivo.FullName
 
                 $dataModificacao = $arquivo.LastWriteTime
 
                 if ($dataModificacao -gt $dataHoraComparacao) {
-                    Write-Host -ForegroundColor Red $arquivo.Name " -> foi modificado apos a data e hora especificadas."
+					$fstring = "{0}            ->     {1}" -f $arquivo.Name, "Modificado"
+                    Write-Host -ForegroundColor Red $fstring 
                 } else {
-                    Write-Host -ForegroundColor Green $arquivo.Name " -> inalterado"
+					$fstring = "{0}            ->     {1}" -f $arquivo.Name, "Inalterado"
+                    Write-Host -ForegroundColor Green $fstring 
                 }
             }
+			if ($arquivo.PSIsContainer -eq $true) {
+				$arquivo.Name + " (Pasta)"
+			}
         }
 
         Write-Host "------------------------"
