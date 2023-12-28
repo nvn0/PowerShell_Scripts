@@ -7,7 +7,7 @@ $file1_path = "C:\Users\$env:USERNAME\meus docs\varios dbs\varios\varios volume.
 $file1_hash = "2162e71bc74905aba208c8a5d26dec6df13faf21428df9f1485f4c06e67d0c6a"
 
 # Data e hora para comparação (por exemplo, 23 de dezembro de 2023 às 10:00)
-$dataHoraComparacao = Get-Date "2023-12-23T10:00:00"
+$dataHoraComparacao = Get-Date "2023-12-28T10:00:00"
 
 Write-Host
 write-Host "Data especificada:" $dataHoraComparacao
@@ -27,13 +27,23 @@ foreach ($pasta in $listaDePastas) {
                #$caminhoArquivo = $arquivo.FullName
 
                 $dataModificacao = $arquivo.LastWriteTime
+				$dataUltimaAbertura = $arquivo.LastAccessTime
 
                 if ($dataModificacao -gt $dataHoraComparacao) {
 					$fstring = "{0}   ->     {1}" -f $arquivo.Name, "Modificado"
                     Write-Host -ForegroundColor Red $fstring 
+					
+					if ($dataUltimaAbertura -gt $dataHoraComparacao) {
+						Write-Host -ForegroundColor Yellow " O ficheiro foi aberto a´pos a data especificada."
+					}
+					
                 } else {
 					$fstring = "{0}   ->     {1}" -f $arquivo.Name, "Inalterado"
                     Write-Host -ForegroundColor Green $fstring 
+					
+					if ($dataUltimaAbertura -gt $dataHoraComparacao) {
+						Write-Host -ForegroundColor Yellow " O ficheiro foi aberto a´pos a data especificada."
+					}
                 }
             }
 			if ($arquivo.PSIsContainer -eq $true) {
