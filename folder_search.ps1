@@ -24,6 +24,7 @@ foreach ($pasta in $listaDeDiretorios) {
 			}
 		} else {
 			Write-Host "Nenhuma pasta encontrada com a palavra-chave '$nome'."
+			Exit
 		}
 	}
 }
