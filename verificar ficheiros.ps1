@@ -34,7 +34,9 @@ foreach ($pasta in $listaDePastas) {
                     Write-Host -ForegroundColor Red $fstring 
 					
 					if ($dataUltimaAbertura -gt $dataHoraComparacao) {
-						Write-Host -ForegroundColor Yellow " O ficheiro foi aberto a´pos a data especificada."
+						Write-Host -ForegroundColor Yellow " O ficheiro foi aberto apos a data especificada."
+						Write-Host ""
+
 					}
 					
                 } else {
@@ -42,7 +44,7 @@ foreach ($pasta in $listaDePastas) {
                     Write-Host -ForegroundColor Green $fstring 
 					
 					if ($dataUltimaAbertura -gt $dataHoraComparacao) {
-						Write-Host -ForegroundColor Yellow " O ficheiro foi aberto a´pos a data especificada."
+						Write-Host -ForegroundColor Yellow " O ficheiro foi aberto apos a data especificada."
 					}
                 }
             }
