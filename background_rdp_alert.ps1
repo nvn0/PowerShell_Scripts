@@ -74,7 +74,7 @@ Start-Job -ScriptBlock {
                         foreach ($event in $events) {
                             $message = "Logon type $logonTypeDescription detected.`nTime: $($event.TimeGenerated)`nUser: $($event.UserDomain)\$($event.UserName)`nIP: $($event.ClientIP)"
                             # Usar Write-Host para notificação simples
-                             Write-Host -ForegroundColor Yellow "Logon Alert: $message"
+                            Write-Host -ForegroundColor Yellow "Logon Alert: $message"
                             # Alternativamente, registrar no log de eventos do Windows
                             # Write-EventLog -LogName Application -Source "LogonChecker" -EventId 1000 -EntryType Information -Message $message
                         }
