@@ -4,6 +4,7 @@ Get-EventLog security -after (Get-date -hour 0 -minute 0 -second 0) |
         $_.Message -match 'logon type:\s+(10|3)\s' #$_.Message -match 'logon type:\s+(10|3|5|7)\s'
     } | Out-GridView
 
+# OUTRO COMANDO: Get-WinEvent -LogName 'Security'
 
 #$RDPAuths = Get-WinEvent -LogName 'Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational' -FilterXPath '<QueryList><Query Id="0"><Select>*[System[EventID=1149]]</Select></Query></QueryList>'
 #[xml[]]$xml=$RDPAuths|Foreach{$_.ToXml()}
