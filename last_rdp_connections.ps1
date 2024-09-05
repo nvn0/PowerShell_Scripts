@@ -6,6 +6,8 @@ Get-EventLog security -after (Get-date -hour 0 -minute 0 -second 0) |
 
 # OUTRO COMANDO: Get-WinEvent -LogName 'Security'
 
+# Get-WinEvent -LogName Microsoft-Windows-TerminalServices-RDPClient/Operational -MaxEvents 32
+
 #$RDPAuths = Get-WinEvent -LogName 'Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational' -FilterXPath '<QueryList><Query Id="0"><Select>*[System[EventID=1149]]</Select></Query></QueryList>'
 #[xml[]]$xml=$RDPAuths|Foreach{$_.ToXml()}
 #$EventData = Foreach ($event in $xml.Event)

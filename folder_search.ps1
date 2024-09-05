@@ -1,4 +1,4 @@
-$listaDeDiretorios = @("C:\Users\$env:USERNAME\meus docs\ficheiros html\listas")
+$listaDeDiretorios = @("C:\Users\$env:USERNAME\meus docs")
 
 $listaPastasEncontradas = @()
 
