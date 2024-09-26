@@ -1,13 +1,35 @@
 
 
 #Para desativar
-$listaDeServicos= @("LGHUBUpdaterService", "ClickToRunSvc", "SSDPSRV", "upnphost")
+$listaDeServicos= @("LGHUBUpdaterService", "ClickToRunSvc", "SSDPSRV", "upnphost", "DiagTrack", "shpamsvc", "RemoteRegistry", "Fax")
 
 
 
 #Para por em manual
-$listaDeServicos2= @("LGHUBUpdaterService", "ClickToRunSvc", "SSDPSRV", "upnphost")
+$listaDeServicos2= @("LGHUBUpdaterService", "ClickToRunSvc", "SSDPSRV")
 
+
+# Lista de pacotes a serem verificados e removidos
+$appsToRemove = @(
+    "Candy Crush Saga",
+    "Candy Crush Soda Saga",
+    "FarmVille 2: Country Escape",
+    "Microsoft Solitaire Collection",
+    "March of Empires",
+    "Asphalt 8: Airborne",
+    "Disney Magic Kingdoms",
+    "Bubble Witch 3 Saga",
+    "Microsoft News",
+    "Skype",
+    "Instagram",
+    "TikTok",
+    "Mixed Reality Portal",
+	"Microsoft.XboxApp"
+)
+
+
+
+# others that you may want to add to the list: "Roblox", "3D Viewer", "Paint 3D"
 
 # Nome do serviço
 #$serviceName = "Spooler"
@@ -27,6 +49,8 @@ $listaDeServicos2= @("LGHUBUpdaterService", "ClickToRunSvc", "SSDPSRV", "upnphos
 
 function Desativar {
 	
+	Write-Host "A desativar servicos inuteis"
+	
 	# Desativar
 	foreach ($servico in $listaDeServicos) {
 		Stop-Service -Name $servico
@@ -34,6 +58,8 @@ function Desativar {
 		
 	}
 }
+
+
 
 
 function PorManual {
@@ -46,8 +72,77 @@ function PorManual {
 	}
 }
 
+
+################## Resgistry ##################
+
+
+
+function desativar_reg {
+	
+	# Desabilitar a coleta de dados de diagnóstico e feedback
+	Write-Host "A desativar coleta de dados de diagnóstico e feedback..."
+	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "AllowTelemetry" -Value 0
+
+
+	Write-Host "A desativar a Cortana..."
+    # Desativar a Cortana via registro
+    Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "AllowCortana" -Value 0 -Force
+	
+	# Finalizar o processo da Cortana (caso esteja em execução)
+    $cortanaProcess = Get-Process -Name "SearchUI" -ErrorAction SilentlyContinue
+    if ($cortanaProcess) {
+        Write-Host "Finalizando o processo da Cortana..."
+        Stop-Process -Name "SearchUI" -Force
+    } else {
+        Write-Host "Cortana não está em execução."
+    }
+	
+	
+}
+
+
+
+#########################################################
+
+############## Uninstall programs and games ############
+
+# Função para verificar e remover os pacotes
+function desinstalar_bloat {
+	
+	foreach ($app in $appsToRemove) {
+		$package = Get-AppxPackage | Where-Object { $_.Name -like "*$app*" }
+
+		if ($package) {
+			Write-Host "Removendo $app..."
+			Remove-AppxPackage -Package $package.PackageFullName
+		} else {
+			Write-Host "$app não está instalado."
+		}
+	}
+
+	Write-Host "Verificação e remoção concluída."
+}
+
+#########################################################
+
+
+
+
+
+
+
+
+
+
+# chamar funções
+desinstalar_bloat
+
+
 Desativar
 #PorManual
+
+
+desativar_reg
 
 
 

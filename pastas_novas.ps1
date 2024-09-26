@@ -3,7 +3,7 @@ $WhiteList = @("C:\Users\$env:USERNAME\Info Tecnica\", "C:\Program Files\BraveSo
 
 
 # Data e hora para comparação (por exemplo, 23 de dezembro de 2023 às 10:00)
-$dataHoraComparacao = Get-Date "2024-09-5T10:00:00"
+$dataHoraComparacao = Get-Date "2024-09-22T10:00:00"
 
 Write-Host
 write-Host "Data especificada:" $dataHoraComparacao
