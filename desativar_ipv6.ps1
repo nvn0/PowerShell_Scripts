@@ -21,12 +21,12 @@ $binding = Get-NetAdapterBinding -Name $interfaceName -ComponentID ms_tcpip6
 
 
 if ($binding.Enabled) {
-    # Se o IPv6 estiver habilitado, desabilite-o
+    # Se o IPv6 estiver ativado, desativa-o
     Disable-NetAdapterBinding -Name $interfaceName -ComponentID ms_tcpip6
     Write-Output "IPv6 foi desativado na interface $interfaceName."
 	
 } else {
-    # Se o IPv6 estiver desabilitado, habilite-o
+    # Se o IPv6 estiver desativado, ativa-o
     Enable-NetAdapterBinding -Name $interfaceName -ComponentID ms_tcpip6
     Write-Output "IPv6 foi ativado na interface $interfaceName."
 }

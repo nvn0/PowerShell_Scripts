@@ -44,7 +44,7 @@ $appsToRemove = @(
 #Get-Service -Name $serviceName | Select-Object Name, Status, StartType
 
 
-########################################################################################
+##################################### Servicos ###################################################
 
 
 function Desativar {
@@ -100,6 +100,16 @@ function desativar_reg {
 	
 }
 
+function Disable-FastStartup {
+    Write-Host "Desativando o Fast Startup..."
+
+    # Desabilita o Fast Startup via registro
+    Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Power" -Name "HiberbootEnabled" -Value 0
+
+    Write-Host "Fast Startup foi desativado com sucesso."
+}
+
+
 
 
 #########################################################
@@ -123,6 +133,20 @@ function desinstalar_bloat {
 	Write-Host "Verificação e remoção concluída."
 }
 
+
+# Script para desinstalar programs com winget
+function desinstalar_bloat_winget {
+	if (Get-Command winget -ErrorAction SilentlyContinue) {
+		
+		Write-Host "Desinstalando o OneDrive..."
+		winget uninstall Microsoft.OneDrive
+		Write-Host "OneDrive desinstalado com sucesso."
+		
+		
+	} else {
+		Write-Host "O winget não está disponível no sistema."
+	}
+}
 #########################################################
 
 
@@ -144,7 +168,7 @@ Desativar
 
 desativar_reg
 
-
+Disable-FastStartup
 
 
 
